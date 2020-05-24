@@ -1,0 +1,11 @@
+{{- if .Values.createPriorityClass }}
+apiVersion: scheduling.k8s.io/v1
+kind: PriorityClass
+metadata:
+  name: {{ include "insider.fullname" . }}
+  labels:
+{{ include "insider.labels" . | indent 4 }}
+value: {{ .Values.podPriority.value  }}
+globalDefault: {{ .Values.podPriority.globalDefault  }}
+description: {{ .Values.podPriority.description  }}
+{{- end }}
