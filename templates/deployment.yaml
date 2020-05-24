@@ -28,7 +28,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if .Values.podPriority }}
+          {{- if .Values.createPriorityClass }}
           priorityClassName: {{ include "insider.fullname" . }}
           {{- else }}
           priorityClassName: system-node-critical
