@@ -27,14 +27,12 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+## Horizontal Pod Scaling
 hpa:
   maxReplicas: 20
   minReplicas: 10
-  target:
-    api: apps/v1
-    kind: Deployment
-    name: nodejs-test-deployment
-  cpu: 50
+  avgCPU: 50
+  avgMemory: 60
 
 ## For Kubernetes 1.16 and before, "system-cluster-critical" and "system-node-critical" classnames,
 ## are limited to the "kube-system" namespace.

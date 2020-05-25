@@ -1,7 +1,6 @@
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: nodejs-test-deployment
   name: {{ include "insider.fullname" . }}
   labels:
 {{ include "insider.labels" . | indent 4 }}
@@ -9,7 +8,15 @@ spec:
   maxReplicas: {{ .Values.hpa.maxReplicas }}
   minReplicas: {{ .Values.hpa.minReplicas }}
   scaleTargetRef:
-    apiVersion: {{ .Values.hpa.target.api }}
-    kind: {{ .Values.hpa.target.kind }}
-    name: {{ .Values.hpa.target.name }}
-  targetCPUUtilizationPercentage: {{ .Values.hpa.cpu }}
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ include "insider.fullname" . }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {{ .Values.hpa.avgCPU }}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {{ .Values.hpa.avgMemory }}
