@@ -19,19 +19,23 @@
 * [AWS Command Line Interface](https://aws.amazon.com/cli/)- v2.0.16
 * [helm](https://v2.helm.sh/)- v2.16.1
 
+### Load Testing
+
+* Locust and Bombardier were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
+
 ### Initializing required variables
 
-Before we get started with the deployment, initialize some environment variables to make things simpler
+* Before we get started with the deployment, initialize some environment variables to make things simpler
 
-```sh
-# Replace below values with appropriate ones
-export AWS_ACCOUNT_ID=0123456789
-export REGION=ap-south-1
-export REPOSITORY=nodejs-test
-export EKS_CLUSTER_NAME=insider
-export HELM_RELEASE=test-release
+    ```sh
+    # Replace below values with appropriate ones
+    export AWS_ACCOUNT_ID=0123456789
+    export REGION=ap-south-1
+    export REPOSITORY=nodejs-test
+    export EKS_CLUSTER_NAME=insider
+    export HELM_RELEASE=test-release
 
-```
+    ```
 
 ---
 
