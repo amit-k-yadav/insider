@@ -1,0 +1,10 @@
+# This is only needed if you Kubernetes cluster version is 1.16 or below
+apiVersion: scheduling.k8s.io/v1
+description: For pods with highest user defined priority
+kind: PriorityClass
+metadata:
+  labels:
+    app.kubernetes.io/instance: paytm
+    app.kubernetes.io/managed-by: Tiller
+  name: highest-custom-priority
+value: 1000000000

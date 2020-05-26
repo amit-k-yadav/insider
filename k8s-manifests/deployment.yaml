@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: paytm
+    app.kubernetes.io/name: insider
+  name: paytm-insider
+  namespace: default
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: paytm
+      app.kubernetes.io/name: insider
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 3
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: paytm
+        app.kubernetes.io/name: insider
+    spec:
+      containers:
+      - image: 0123456789.dkr.ecr.ap-south-1.amazonaws.com/nodejs-test:latest
+        imagePullPolicy: Always
+        ## In Kubernetes version 1.16 and below pre-defined priorityClassNames,
+        ## are only affective in "kube-system" namespace.
+        ## For other namespaces, use custom priorityClass
+        priorityClassName: highest-custom-priority
+
+        ## If your kubernetes version is 1.17 or above
+        ## You can use "system-node-critical" in any namespace
+        # priorityClassName: system-node-critical
+        name: insider
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 150m
+            memory: 150Mi
+          requests:
+            cpu: 100m
+            memory: 100Mi
+      imagePullSecrets:
+      - name: paytm-insider
