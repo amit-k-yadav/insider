@@ -20,11 +20,11 @@
 
     # Deploy the Helm chart changing appropriate variables below
     helm install --name ${HELM_RELEASE} --set image.tag=latest,\
-        imageCredentials.create=true,\
-        image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY},\
-        imageCredentials.registry=https://${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com,\
-        imageCredentials.username=AWS,\
-        imageCredentials.password=${TOKEN} ./
+    imageCredentials.create=true,\
+    image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY},\
+    imageCredentials.registry=https://${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com,\
+    imageCredentials.username=AWS,\
+    imageCredentials.password=${TOKEN} ./
 
     ```
 
