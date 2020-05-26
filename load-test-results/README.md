@@ -1,6 +1,4 @@
-# Load testing
-
-## Following load testing tools were used:
+# Load testing results
 
 ### [bombardier](https://github.com/codesenberg/bombardier) - Fast cross-platform HTTP benchmarking tool written in Go
 

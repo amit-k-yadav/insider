@@ -10,7 +10,7 @@
 
 ### Load Testing
 
-* Locust and Bombardier were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
+* [Locust](https://locust.io/) and [Bombardier](https://github.com/codesenberg/bombardier) were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
 
 ### Assumptions to deploy on AWS
 
