@@ -1,18 +1,23 @@
 replicaCount: 10
 
-## Replace the following repository with an appropriate one
+
+## Replace the following repository with an actual one
+## pullPolicy is "Always" by default for "latest" tag
 image:
   repository: 0123456789.dkr.ecr.ap-south-1.amazonaws.com/nodejs-test
   tag: latest
   pullPolicy: Always
 
+
 ## In order to give custom full-name to the resources, define the following values
 nameOverride: ""
 fullnameOverride: ""
 
+
 ## Provide externally created secrets like this
 # externalImagePullSecrets: [name: docker-credentials]
 externalImagePullSecrets: []
+
 
 ## ImagePullSecret can be create on the fly by setting "create: true" and providing appropriate values
 ## Run "aws ecr get-login-password --region ap-south-1"  to get the docker password
@@ -22,17 +27,20 @@ imageCredentials:
   username: AWS
   password: YourAWSDockerPassword
 
-## Any update shoudl kill only 3 pods out of 10 at once and keep 7 running all the time
+
+## Any update should kill only 3 pods out of 10 at once, and keep 7 pods running all the time
 updateStrategy:
   type: RollingUpdate
   maxUnavailable: 3
 
-containerPort: 3000
 
 ## By default type "LoadBalancer" creates a EC2 Classic Load Balancer on AWS
 service:
   type: LoadBalancer
   port: 3000
+
+containerPort: 3000
+
 
 ## Define resources depending on the application requirements
 resources:
@@ -43,6 +51,7 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+
 ## Horizontal Pod Scaling
 ## The following values keep a minimum 10 and a maximum of 20 replicas
 ## Auto-scaling takes place on 50% average CPU utilization or 60% memory by the pods
@@ -52,10 +61,11 @@ hpa:
   avgCPU: 50
   avgMemory: 60
 
-## For Kubernetes 1.16 and before, "system-cluster-critical" and "system-node-critical" classnames,
-## are limited to the "kube-system" namespace.
-## There is no need to create this if Kubernetes version is 1.17 (or higher)
-createPriorityClass: true  # If set to false, highest system defined priority "system-node-critical" is used
+
+## In Kubernetes version 1.16 and below pre-defined priorityClassNames, are limited to "kube-system" namespace.
+## For other namespaces, use custom priorityClass. Set "createPriorityClass" to true if k8s version is 1.16 or below.
+## If "createPriorityClass" set to false, "system-node-critical" is used. Only affective in k8s v1.17 and above.
+createPriorityClass: true
 podPriority:
   description: For pods with highest user defined priority
   value: 1000000000 # Maximum allowed value of a user defined priority
