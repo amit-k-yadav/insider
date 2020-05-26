@@ -41,6 +41,8 @@ Percentage of the requests completed within given times
 
 ```
 
+---
+
 ## Helm chart and Kubernetes manifests have been deployed and tested on
 
 * [Amazon Elastic Kubernetes Service (EKS)](https://aws.amazon.com/eks/) - v1.16
