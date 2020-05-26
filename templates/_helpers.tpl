@@ -54,3 +54,12 @@ Create the name of the service account to use
     {{ default "default" .Values.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create imagePullSecrets if docker username and password are provided.
+*/}}
+{{- define "imagePullSecret" }}
+{{- if .Values.imageCredentials.create }}
+{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\", \"username\":\"%s\",\"password\":\"%s\" }}}" .Values.imageCredentials.registry (printf "%s:%s" .Values.imageCredentials.username .Values.imageCredentials.password | b64enc) .Values.imageCredentials.username .Values.imageCredentials.password | b64enc }}
+{{- end -}}
+{{- end }}

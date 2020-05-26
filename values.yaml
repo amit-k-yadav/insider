@@ -1,24 +1,40 @@
 replicaCount: 10
 
+## Replace the following repository with an appropriate one
 image:
-  repository: gcr.io/p8pigsol/nodejs-test
+  repository: 0123456789.dkr.ecr.ap-south-1.amazonaws.com/nodejs-test
   tag: latest
   pullPolicy: Always
 
-imagePullSecrets: []
+## In order to give custom full-name to the resources, define the following values
 nameOverride: ""
 fullnameOverride: ""
 
+## Provide externally created secrets like this
+# externalImagePullSecrets: [name: docker-credentials]
+externalImagePullSecrets: []
+
+## ImagePullSecret can be create on the fly by setting "create: true" and providing appropriate values
+## Run "aws ecr get-login-password --region ap-south-1"  to get the docker password
+imageCredentials:
+  create: false
+  registry: https://0123456789.dkr.ecr.ap-south-1.amazonaws.com
+  username: AWS
+  password: YourAWSDockerPassword
+
+## Any update shoudl kill only 3 pods out of 10 at once and keep 7 running all the time
 updateStrategy:
   type: RollingUpdate
   maxUnavailable: 3
 
 containerPort: 3000
 
+## By default type "LoadBalancer" creates a EC2 Classic Load Balancer on AWS
 service:
   type: LoadBalancer
   port: 3000
 
+## Define resources depending on the application requirements
 resources:
   limits:
     cpu: 100m
@@ -28,6 +44,8 @@ resources:
     memory: 128Mi
 
 ## Horizontal Pod Scaling
+## The following values keep a minimum 10 and a maximum of 20 replicas
+## Auto-scaling takes place on 50% average CPU utilization or 60% memory by the pods
 hpa:
   maxReplicas: 20
   minReplicas: 10
