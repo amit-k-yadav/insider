@@ -21,7 +21,7 @@
 
 ### Initializing required variables
 
-Before get started with the deployment, initialize some environment variables to make things simpler
+Before we get started with the deployment, initialize some environment variables to make things simpler
 
 ```sh
 # Replace below values with appropriate ones
@@ -32,3 +32,11 @@ export EKS_CLUSTER_NAME=insider
 export HELM_RELEASE=test-release
 
 ```
+
+---
+
+## Deployment Instructions
+
+### 1. Building and pushing the docker image to [ECR](https://aws.amazon.com/ecr/)
+
+The "[nodejs-docker](./nodejs-docker)" directory has necessary Dockerfile and node-js files to build the docker image. Refer to its [README](./nodejs-docker/README.md) for more.
