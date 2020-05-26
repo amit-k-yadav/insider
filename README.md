@@ -40,3 +40,7 @@ export HELM_RELEASE=test-release
 ### 1. Building and pushing the docker image to [ECR](https://aws.amazon.com/ecr/)
 
 The "[nodejs-docker](./nodejs-docker)" directory has necessary Dockerfile and node-js files to build the docker image. Refer to its [README](./nodejs-docker/README.md) for more.
+
+### 2. Deploy using [helm-chart](./helm-chart)
+
+For more details on deploying this application using provided helm-chart, refer to its [README](./helm-chart/README.md)
