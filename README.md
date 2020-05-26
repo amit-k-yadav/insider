@@ -8,6 +8,10 @@
 * [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) - v1.16.8
 * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - v1.10.1
 
+### Load Testing
+
+* Locust and Bombardier were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
+
 ### Assumptions to deploy on AWS
 
 * An EKS Cluster is running with enough resources to run the deployment
@@ -18,10 +22,6 @@
 * [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) - v1.15.3
 * [AWS Command Line Interface](https://aws.amazon.com/cli/)- v2.0.16
 * [helm](https://v2.helm.sh/)- v2.16.1
-
-### Load Testing
-
-* Locust and Bombardier were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
 
 ### Initializing required variables
 
