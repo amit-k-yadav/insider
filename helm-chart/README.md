@@ -1,4 +1,4 @@
-# Deploy using [helm-chart](./helm-chart)
+# Helm Deployment
 
 * Kubernetes has support for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) to pull images from private repositories (like [ECR](https://aws.amazon.com/ecr/), [GCR](https://cloud.google.com/container-registry), etc.). We can create a Kubernetes secret of type `kubernetes.io/dockerconfigjson` and use the same in deployments.
 
@@ -6,14 +6,15 @@
 
     ```sh
 
-    # Update Kube-config to point to this EKS
+    # Update kube-config to point to the running EKS
     aws eks --region ${REGION} update-kubeconfig --name ${EKS_CLUSTER_NAME}
+
 
     # Get token and use the to create a k8s secret
     export TOKEN=`aws ecr get-login-password --region=${REGION}`
 
-    # Deploy the Helm chart changing appropriate variables below
 
+    # Deploy the Helm chart changing appropriate variables below
     helm install --name ${HELM_RELEASE} --set image.tag=latest,\
         imageCredentials.create=true,\
         image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY},\
@@ -30,8 +31,11 @@
     export SERVICE_ENDPOINT=`kubectl get service/${HELM_RELEASE}-insider \
     -o jsonpath="{..status..loadBalancer..ingress..hostname}"`
 
+
     curl http://${SERVICE_ENDPOINT}:3000
 
+    ---
     ## Output
     Hello, welcome to Paytm Insider
+    ---
     ```
