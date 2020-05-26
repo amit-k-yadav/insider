@@ -18,3 +18,17 @@
 * [kubectl](https://kubernetes.io/docs/reference/kubectl/overview/) - v1.15.3
 * [AWS Command Line Interface](https://aws.amazon.com/cli/)- v2.0.16
 * [helm](https://v2.helm.sh/)- v2.16.1
+
+### Initializing required variables
+
+Before get started with the deployment, initialize some environment variables to make things simpler
+
+```sh
+# Replace below values with appropriate ones
+export AWS_ACCOUNT_ID=0123456789
+export REGION=ap-south-1
+export REPOSITORY=nodejs-test
+export EKS_CLUSTER_NAME=insider
+export HELM_RELEASE=test-release
+
+```
