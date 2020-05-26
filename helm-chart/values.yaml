@@ -62,10 +62,17 @@ hpa:
   avgMemory: 60
 
 
-## In Kubernetes version 1.16 and below pre-defined priorityClassNames, are limited to "kube-system" namespace.
-## For other namespaces, use custom priorityClass. Set "createPriorityClass" to true if k8s version is 1.16 or below.
-## If "createPriorityClass" set to false, "system-node-critical" is used. Only affective in k8s v1.17 and above.
-createPriorityClass: true
+## Kubernetes version 1.16 (and below) support pre-defined priority-classes "ONLY" in kube-system namespace
+
+## WARNING: You MUST not set "supportsDefaultClass" to true until:
+## 1. You are using K8s v1.17 and higher
+## OR
+## 2. A lower version (< v1.17) of K8s but doing the deployment in 'kube-system' namspace
+supportsDefaultClass: false
+
+
+## The below values are associated to custom priority class
+## These are used only when "supportsDefaultClass" is set to false
 podPriority:
   description: For pods with highest user defined priority
   value: 1000000000 # Maximum allowed value of a user defined priority

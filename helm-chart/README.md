@@ -1,6 +1,6 @@
 # Helm Deployment
 
-### NOTE: All of the Helm variable used in this chart are explained in details in the [values.yaml](./values.yaml) file
+### NOTE: All of the Helm variables used in this chart are explained in details in the [values.yaml](./values.yaml) file
 
 * Kubernetes has support for [imagePullSecrets](https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/) to pull images from private repositories (like [ECR](https://aws.amazon.com/ecr/), [GCR](https://cloud.google.com/container-registry), etc.). We can create a Kubernetes secret of type `kubernetes.io/dockerconfigjson` and use the same in deployments
 

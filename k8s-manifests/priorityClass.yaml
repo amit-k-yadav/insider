@@ -1,4 +1,5 @@
-# This is only needed if you Kubernetes cluster version is 1.16 or below
+## Kubernetes version 1.16 (and below) support pre-defined priority-classes "ONLY" in kube-system namespace
+## For other namespaces, use custom priorityClass. This isn't needed for k8s version 1.17 and above
 apiVersion: scheduling.k8s.io/v1
 description: For pods with highest user defined priority
 kind: PriorityClass

@@ -1,6 +1,6 @@
-## In Kubernetes version 1.16 and below pre-defined priorityClassNames, are only affective in "kube-system" namespace.
+## Kubernetes version 1.16 (and below) support pre-defined priority-classes "ONLY" in kube-system namespace
 ## For other namespaces, use custom priorityClass. This isn't needed for k8s version 1.17 and above
-{{- if .Values.createPriorityClass }}
+{{- if ne .Values.supportsDefaultClass true }}
 apiVersion: scheduling.k8s.io/v1
 kind: PriorityClass
 metadata:
