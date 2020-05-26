@@ -1,16 +1,16 @@
 # Insider - Assignment
 
-## Introduction and assumptions
+## Instructions and assumptions
+
+## Load Testing
+
+* [Locust](https://locust.io/) and [Bombardier](https://github.com/codesenberg/bombardier) were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
 
 ### Provided Helm chart and Kubernetes manifests have been deployed and tested on the following environments
 
 * [Amazon Elastic Kubernetes Service (EKS)](https://aws.amazon.com/eks/) - v1.16
 * [Google Kubernetes Engine (GKE)](https://cloud.google.com/kubernetes-engine) - v1.16.8
 * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) - v1.10.1
-
-### Load Testing
-
-* [Locust](https://locust.io/) and [Bombardier](https://github.com/codesenberg/bombardier) were used to perform the load testing of the application. Check this [README](./load-test-results/README.md) for results.
 
 ### Assumptions to deploy on AWS
 
