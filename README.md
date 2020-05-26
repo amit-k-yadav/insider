@@ -44,3 +44,7 @@ The "[nodejs-docker](./nodejs-docker)" directory has necessary Dockerfile and no
 ### 2. Deploy using [helm-chart](./helm-chart)
 
 For more details on deploying this application using provided helm-chart, refer to its [README](./helm-chart/README.md)
+
+### 3. Deploy using [k8s-manifests](./k8s-manifests)
+
+For more details using kubectl for the deployment, refer to its [README](./k8s-manifests/README.md)
