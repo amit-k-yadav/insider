@@ -56,7 +56,7 @@ Create the name of the service account to use
 {{- end -}}
 
 {{/*
-Create imagePullSecrets if docker username and password are provided.
+Create imagePullSecrets if imageCredentials.create is set to true
 */}}
 {{- define "imagePullSecret" }}
 {{- if .Values.imageCredentials.create }}
