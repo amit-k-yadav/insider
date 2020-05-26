@@ -9,7 +9,7 @@ aws ecr create-repository --repository-name ${REPOSITORY}
 
 
 # Build the docker image from nodejs-docker directory
-docker build -t \ 
+docker build -t \
     ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY} .
 
 
