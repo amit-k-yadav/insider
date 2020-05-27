@@ -67,13 +67,16 @@ Percentage of the requests completed within given times
     ```sh
     # Replace below values with appropriate ones
     export AWS_ACCOUNT_ID=0123456789
-    export AWS_ACCESS_KEY_ID=yourAWSKey
-    export AWS_SECRET_ACCESS_KEY=yourAWKSecretAccessKey
     export REGION=ap-south-1
     export NODEJS_REPOSITORY=nodejs-test
     export CRON_REPOSITORY=kubectl-aws
     export EKS_CLUSTER_NAME=insider
     export HELM_RELEASE=test-release
+
+    # Following two values are only required if using imagePullSecrets
+    # and want to deploy a cronJob to refresh AWS token
+    export AWS_ACCESS_KEY_ID=yourAWSKey
+    export AWS_SECRET_ACCESS_KEY=yourAWKSecretAccessKey
 
     ```
 
