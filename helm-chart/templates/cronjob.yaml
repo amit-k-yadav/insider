@@ -3,30 +3,27 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: ecr-cred-updater
+  name: {{ include "insider.fullname" . }}
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
   verbs: ["get", "create", "delete"]
-- apiGroups: [""]
-  resources: ["serviceaccounts"]
-  verbs: ["get", "patch"]
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: ecr-cred-updater
+  name: {{ include "insider.fullname" . }}
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: ecr-cred-updater
+  name: {{ include "insider.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    name: ecr-cred-updater
+    name: {{ include "insider.fullname" . }}
 roleRef:
   kind: Role
-  name: ecr-cred-updater
+  name: {{ include "insider.fullname" . }}
   apiGroup: rbac.authorization.k8s.io
 ---
 apiVersion: batch/v1beta1
@@ -36,7 +33,7 @@ metadata:
   labels:
 {{ include "insider.labels" . | indent 4 }}
 spec:
-  serviceAccountName: ecr-cred-updater
+  serviceAccountName: {{ include "insider.fullname" . }}
   schedule: "{{ .Values.cron.schedule }}"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
