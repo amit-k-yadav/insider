@@ -37,7 +37,7 @@
     cron.env.aws_account=${AWS_ACCOUNT_ID},\
     cron.env.aws_access_key_id=${AWS_ACCESS_KEY_ID},\
     cron.env.aws_secret_access_key=${AWS_SECRET_ACCESS_KEY},\
-    cron.schedule="* */11 * * *" ./
+    cron.schedule="0 */11 * * *" ./
     ```
 
 * Now that we have our app deployed on EKS, let’s verify if the service is working
