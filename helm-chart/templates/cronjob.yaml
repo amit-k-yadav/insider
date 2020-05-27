@@ -29,7 +29,7 @@ roleRef:
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "insider.fullname" . }}
+  name: "{{ include "insider.fullname" . }}-cron"
   labels:
 {{ include "insider.labels" . | indent 4 }}
 spec:
@@ -39,7 +39,7 @@ spec:
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
-      backoffLimit: 4
+      backoffLimit: 1
       template:
         metadata:
         labels:
