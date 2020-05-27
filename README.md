@@ -68,9 +68,15 @@ Percentage of the requests completed within given times
     # Replace below values with appropriate ones
     export AWS_ACCOUNT_ID=0123456789
     export REGION=ap-south-1
-    export REPOSITORY=nodejs-test
+    export NODEJS_REPOSITORY=nodejs-test
+    export CRON_REPOSITORY=kubectl-aws
     export EKS_CLUSTER_NAME=insider
     export HELM_RELEASE=test-release
+
+    # Following two values are only required if using imagePullSecrets
+    # and want to deploy a cronJob to refresh AWS token
+    export AWS_ACCESS_KEY_ID=yourAWSKey
+    export AWS_SECRET_ACCESS_KEY=yourAWKSecretAccessKey
 
     ```
 
@@ -78,9 +84,11 @@ Percentage of the requests completed within given times
 
 ## Deployment Instructions
 
-### 1. Building and pushing the docker image to [ECR](https://aws.amazon.com/ecr/)
+### 1. Building and pushing the docker images to [ECR](https://aws.amazon.com/ecr/)
 
-The "[nodejs-docker](./nodejs-docker)" directory has necessary Dockerfile and node-js files to build the docker image. Refer to its [README](./nodejs-docker/README.md) for more.
+* The "[nodejs-docker](./nodejs-docker)" directory has necessary Dockerfile and node-js files to build the docker image. Refer to its [README](./nodejs-docker/README.md) for more.
+
+* [aws-cli-docker](./aws-cli-docker) directory has the Dockerfile for creating a docker image with both aws-cli and kubectl installed. This dockerimage is only needed if you are creating imagePullSecrets for ECR.  Refer to its [README](./aws-cli-docker/README.md) for more.
 
 ### 2. Deploy using [helm-chart](./helm-chart)
 

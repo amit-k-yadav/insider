@@ -77,3 +77,20 @@ podPriority:
   description: For pods with highest user defined priority
   value: 1000000000 # Maximum allowed value of a user defined priority
   globalDefault: false
+
+
+## AWS Token Refresher
+## variables and cronJob
+cron:
+
+  image:
+    repository: 0123456789.dkr.ecr.ap-south-1.amazonaws.com/nodejs-test
+    tag: latest
+
+  env:
+    aws_account: 0123456789
+    aws_access_key_id: YourAccesKeyHere
+    aws_secret_access_key: YouSecretAccessKey
+    region: ap-south-1
+
+  schedule: "* */11 * * *"
