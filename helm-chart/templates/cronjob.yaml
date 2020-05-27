@@ -9,18 +9,13 @@ rules:
   resources: ["secrets"]
   verbs: ["get", "create", "delete"]
 ---
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: {{ include "insider.fullname" . }}
----
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: {{ include "insider.fullname" . }}
 subjects:
   - kind: ServiceAccount
-    name: {{ include "insider.fullname" . }}
+    name: default
 roleRef:
   kind: Role
   name: {{ include "insider.fullname" . }}
@@ -33,7 +28,6 @@ metadata:
   labels:
 {{ include "insider.labels" . | indent 4 }}
 spec:
-  serviceAccountName: {{ include "insider.fullname" . }}
   schedule: "{{ .Values.cron.schedule }}"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
@@ -54,7 +48,7 @@ spec:
             image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
             env:
             - name: AWS_ACCOUNT
-              value: "{{ .Values.cron.env.aws_account }}"
+              value: {{ int64 .Values.cron.env.aws_account | quote }}
             - name: AWS_ACCESS_KEY_ID
               value: "{{ .Values.cron.env.aws_access_key_id }}"
             - name: AWS_SECRET_ACCESS_KEY
