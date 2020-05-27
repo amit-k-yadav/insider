@@ -22,7 +22,7 @@
     ## 1. To Deploy without imagePullSecrets
     helm install --name ${HELM_RELEASE} \
     --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${NODEJS_REPOSITORY},\
-    --set image.tag=latest ./
+    image.tag=latest ./
 
 
     ## 2. To Deploy with imagePullSecrets and a cronjob to refresh token in every 11 hours
