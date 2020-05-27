@@ -17,15 +17,26 @@
     # Get token and use the to create a k8s secret
     export TOKEN=`aws ecr get-login-password --region=${REGION}`
 
-
     # Deploy the Helm chart changing appropriate variables below
+
+    ## 1. To Deploy without imagePullSecrets
+    helm install --name ${HELM_RELEASE} \
+    --set image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${NODEJS_REPOSITORY},\/
+    --set image.tag=latest ./
+
+    ## 1. To Deploy with imagePullSecrets and a cronjob to refresh token in every 11 hours
     helm install --name ${HELM_RELEASE} --set image.tag=latest,\
+    image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${NODEJS_REPOSITORY},\
     imageCredentials.create=true,\
-    image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${REPOSITORY},\
     imageCredentials.registry=https://${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com,\
     imageCredentials.username=AWS,\
-    imageCredentials.password=${TOKEN} ./
-
+    imageCredentials.password=${TOKEN},\
+    cron.image.repository=${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${CRON_REPOSITORY},\
+    cron.image.tag=latest,\
+    cron.env.aws_account=${AWS_ACCOUNT_ID},\
+    cron.env.aws_access_key_id=${AWS_ACCESS_KEY_ID},\
+    cron.env.aws_secret_access_key=${AWS_SECRET_ACCESS_KEY},\
+    cron.schedule="* */11 * * *" ./
     ```
 
 * Now that we have our app deployed on EKS, let’s verify if the service is working

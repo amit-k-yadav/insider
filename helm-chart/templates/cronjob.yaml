@@ -1,0 +1,83 @@
+## Creates necessary roles and a CronJob that refreshes the k8s secret at every 11th hour
+{{- if .Values.imageCredentials.create }}
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ecr-cred-updater
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "create", "delete"]
+- apiGroups: [""]
+  resources: ["serviceaccounts"]
+  verbs: ["get", "patch"]
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ecr-cred-updater
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ecr-cred-updater
+subjects:
+  - kind: ServiceAccount
+    name: ecr-cred-updater
+roleRef:
+  kind: Role
+  name: ecr-cred-updater
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "insider.fullname" . }}
+  labels:
+{{ include "insider.labels" . | indent 4 }}
+spec:
+  serviceAccountName: ecr-cred-updater
+  schedule: "{{ .Values.cron.schedule }}"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 4
+      template:
+        metadata:
+        labels:
+          app.kubernetes.io/name: {{ include "insider.name" . }}
+          app.kubernetes.io/instance: {{ .Release.Name }}
+        spec:
+          restartPolicy: Never
+          imagePullSecrets:
+          - name: {{ include "insider.fullname" . }}
+          containers:
+          - name: kubectl
+            image: "{{ .Values.cron.image.repository }}:{{ .Values.cron.image.tag }}"
+            env:
+            - name: AWS_ACCOUNT
+              value: "{{ .Values.cron.env.aws_account }}"
+            - name: AWS_ACCESS_KEY_ID
+              value: "{{ .Values.cron.env.aws_access_key_id }}"
+            - name: AWS_SECRET_ACCESS_KEY
+              value: "{{ .Values.cron.env.aws_secret_access_key }}"
+            - name: REGION
+              value: "{{ .Values.cron.env.region }}"
+            - name: SECRET_NAME
+              value: {{ include "insider.fullname" . }}
+            command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              DOCKER_REGISTRY_SERVER=https://${AWS_ACCOUNT}.dkr.ecr.${REGION}.amazonaws.com
+              DOCKER_USER=AWS
+              DOCKER_PASSWORD=`aws ecr get-login-password --region=${REGION}`
+
+              kubectl delete secret --ignore-not-found $SECRET_NAME
+
+              kubectl create secret docker-registry $SECRET_NAME \
+              --docker-server=$DOCKER_REGISTRY_SERVER \
+              --docker-username=$DOCKER_USER \
+              --docker-password=$DOCKER_PASSWORD
+{{- end }}

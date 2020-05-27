@@ -1,16 +1,19 @@
-# Building and pushing a docker image to ECR
+# Dockerimage - aws-cli and kubectl
+
+### This Dockerfile simply builds and image from "amazon/aws-cli:2.0.16" and installs kubectl
 
 To push a docker-image to ECR, we first need to create a registry. Assuming [aws CLI](https://aws.amazon.com/cli/) is configured, run the following commands to create an ECR registry, build and push the image to ECR:
+
 
 ```sh
 
 # Create an ECR repository
-aws ecr create-repository --repository-name ${NODEJS_REPOSITORY}
+aws ecr create-repository --repository-name ${CRON_REPOSITORY}
 
 
 # Build the docker image from nodejs-docker directory
 docker build -t \
-    ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${NODEJS_REPOSITORY} .
+    ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${CRON_REPOSITORY} .
 
 
 # Docker-login for ECR
@@ -21,6 +24,6 @@ aws ecr get-login-password --region ${REGION} | docker login \
 
 # Push the docker image to ECR
 docker push \
-    ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${NODEJS_REPOSITORY}:latest
+    ${AWS_ACCOUNT_ID}.dkr.ecr.${REGION}.amazonaws.com/${CRON_REPOSITORY}:latest
 
 ```
